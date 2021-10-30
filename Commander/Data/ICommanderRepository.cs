@@ -10,7 +10,7 @@ namespace Commander.Data
     {
 
         //get complete list
-        IEnumerable<Command> GetAppCommands();
+        IEnumerable<Command> GetAllCommands ();
 
         //get single item based on id
         Command GetCommandById(int id );

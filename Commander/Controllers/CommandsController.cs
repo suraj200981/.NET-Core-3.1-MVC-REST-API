@@ -36,7 +36,7 @@ namespace Commander.Controllers
         [HttpGet]
         public ActionResult<List<Command>> getAllCommands() {
 
-            var items = _repository.GetAppCommands();
+            var items = _repository.GetAllCommands();
 
             return Ok(items);
         }

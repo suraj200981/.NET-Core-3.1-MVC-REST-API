@@ -14,9 +14,21 @@ namespace Commander.Controllers
     public class CommandsController : ControllerBase     //we are extending to controllerbase instead of controller becuase we have no views.
     {
 
-        //pulling seeded data
-        private readonly MockCommanderRepository _mockCommanderRepository = new MockCommanderRepository();
 
+        private readonly ICommanderRepository _repository;
+
+        //pulling seeded data
+        //private readonly MockCommanderRepository _mockCommanderRepository = new MockCommanderRepository();
+
+        /*
+         * This constructor has be be created in order for the 
+          services.AddScoped<ICommanderRepository, MockCommanderRepository>();
+        to be injected */
+
+        public CommandsController(ICommanderRepository repository)
+        {
+            _repository = repository;
+        }
 
         /**********Requests*********/
 
@@ -24,7 +36,7 @@ namespace Commander.Controllers
         [HttpGet]
         public ActionResult<List<Command>> getAllCommands() {
 
-            var items = _mockCommanderRepository.GetAppCommands();
+            var items = _repository.GetAppCommands();
 
             return Ok(items);
         }
@@ -36,7 +48,7 @@ namespace Commander.Controllers
         public ActionResult<Command> getById(int id)
         {
 
-            var specificItem = _mockCommanderRepository.GetCommandById(id);
+            var specificItem = _repository.GetCommandById(id);
 
             return Ok(specificItem);
         }

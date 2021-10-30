@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Commander.Data
 {
-    interface ICommanderRepository
+    public interface ICommanderRepository
     {
 
         //get complete list

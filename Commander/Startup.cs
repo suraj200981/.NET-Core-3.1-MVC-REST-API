@@ -30,7 +30,12 @@ namespace Commander
             services.AddControllers();
 
             //adding the interface and the repo it is mapped to to the services
-            services.AddScoped<ICommanderRepository, MockCommanderRepository>();
+            // not using the interface with the mock repo becuase we have SQL repo now
+            // services.AddScoped<ICommanderRepository, MockCommanderRepository>(); 
+            services.AddScoped<ICommanderRepository,SQLCommanderRepo>();
+
+
+
 
             //adding db context so it can be accessed throughout the api
             services.AddDbContext<DBContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));

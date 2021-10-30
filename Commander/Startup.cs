@@ -34,11 +34,11 @@ namespace Commander
             // services.AddScoped<ICommanderRepository, MockCommanderRepository>(); 
             services.AddScoped<ICommanderRepository,SQLCommanderRepo>();
 
-
-
-
             //adding db context so it can be accessed throughout the api
             services.AddDbContext<DBContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
+
+            //Adding automapper to create DTO
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

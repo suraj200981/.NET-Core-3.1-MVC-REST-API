@@ -15,6 +15,10 @@ namespace Commander.Profiles
         {
             //createmap method maps command model to readdto model
             CreateMap<Command, ReadDTO>();
+            //createmap method maps command model to createDTO model
+
+            CreateMap<Command, CreateDTO>();
+
         }
 
     }

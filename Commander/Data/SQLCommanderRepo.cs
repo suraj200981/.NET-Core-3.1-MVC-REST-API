@@ -18,6 +18,11 @@ namespace Commander.Data
             _context = context;
         }
 
+        public void CreateCommand(Command command)
+        {
+            _context.commands.Add(command);
+        }
+
         public IEnumerable<Command> GetAllCommands()
         {
             return _context.commands.ToList();
@@ -29,5 +34,7 @@ namespace Commander.Data
             //return first element where Id is == to parameter id
             return _context.commands.FirstOrDefault(p => p.Id == id);
         }
+
+
     }
 }

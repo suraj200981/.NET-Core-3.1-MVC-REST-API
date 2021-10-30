@@ -14,5 +14,8 @@ namespace Commander.Data
 
         //get single item based on id
         Command GetCommandById(int id );
+
+        //create new command
+        void CreateCommand(Command command);
     }
 }

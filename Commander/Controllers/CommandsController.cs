@@ -16,7 +16,7 @@ namespace Commander.Controllers
     public class CommandsController : ControllerBase     //we are extending to controllerbase instead of controller becuase we have no views.
     {
 
-
+        private readonly DBContext _context;
         private readonly ICommanderRepository _repository;
         private readonly IMapper _mapper;
 
@@ -28,10 +28,11 @@ namespace Commander.Controllers
           services.AddScoped<ICommanderRepository, MockCommanderRepository>();
         to be injected */
 
-        public CommandsController(ICommanderRepository repository, IMapper mapper)
+        public CommandsController(ICommanderRepository repository, IMapper mapper, DBContext context)
         {
             _repository = repository;
             _mapper = mapper;
+            _context = context;
         }
 
         /**********Requests*********/
@@ -61,6 +62,19 @@ namespace Commander.Controllers
 
             //this will return mapped DTO object
             return Ok(_mapper.Map<ReadDTO>(specificItem));
+        }
+
+
+        //POST api/commands/create
+        [HttpPost]
+        [Route("create")]
+        public ActionResult<CreateDTO>  Create(Command command) {
+
+           _repository.CreateCommand(command);
+            _context.SaveChanges();
+
+            return Ok();
+
         }
     }
 }

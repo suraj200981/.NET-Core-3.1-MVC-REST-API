@@ -1,4 +1,6 @@
-﻿using Commander.Data;
+﻿using AutoMapper;
+using Commander.Data;
+using Commander.DTOs;
 using Commander.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,6 +18,7 @@ namespace Commander.Controllers
 
 
         private readonly ICommanderRepository _repository;
+        private readonly IMapper _mapper;
 
         //pulling seeded data
         //private readonly MockCommanderRepository _mockCommanderRepository = new MockCommanderRepository();
@@ -25,32 +28,39 @@ namespace Commander.Controllers
           services.AddScoped<ICommanderRepository, MockCommanderRepository>();
         to be injected */
 
-        public CommandsController(ICommanderRepository repository)
+        public CommandsController(ICommanderRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         /**********Requests*********/
 
         //GET api/commands/
         [HttpGet]
-        public ActionResult<List<Command>> getAllCommands() {
+        public ActionResult<List<ReadDTO>> getAllCommands() {
 
             var items = _repository.GetAllCommands();
 
-            return Ok(items);
+            //this will return list of mapped DTO objects
+            return Ok(_mapper.Map<List<ReadDTO>>(items));
         }
 
 
         //GET api/commands/5
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<Command> getById(int id)
+        public ActionResult<ReadDTO> getById(int id)
         {
 
             var specificItem = _repository.GetCommandById(id);
 
-            return Ok(specificItem);
+            if (specificItem == null) {
+                return NotFound(); //404 instead of 204 no content error
+            }
+
+            //this will return mapped DTO object
+            return Ok(_mapper.Map<ReadDTO>(specificItem));
         }
     }
 }

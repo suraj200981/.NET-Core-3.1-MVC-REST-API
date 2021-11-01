@@ -18,6 +18,9 @@ namespace Commander.Profiles
             //createmap method maps command model to createDTO model
 
             CreateMap<Command, CreateDTO>();
+            //updateDTO
+            CreateMap<Command, UpdateDTO>();
+
 
         }
 

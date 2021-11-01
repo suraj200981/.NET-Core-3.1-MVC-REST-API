@@ -1,12 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Commander.Data;
 using Commander.DTOs;
 using Commander.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Commander.Controllers
 {
@@ -79,18 +76,19 @@ namespace Commander.Controllers
 
         //PUT api/commands/5
         [HttpPut("{id}")]
-        public ActionResult Update(int id, CreateDTO commandUpdateDTO)
+        public ActionResult Update(int id, UpdateDTO commandUpdateDTO)
         {
 
-            var commandToUpdate = _repository.GetCommandById(id);
+            var commandFromDB = _repository.GetCommandById(id);
 
-            // _mapper.Map(commandUpdateDTO, commandToUpdate);
-           // _mapper.Map<CreateDTO>(commandUpdateDTO, commandToUpdate);
 
-            _repository.UpdateCommand(commandToUpdate);
+            commandFromDB.HowTo = commandUpdateDTO.HowTo;
+            commandFromDB.Line = commandUpdateDTO.Line;
+            commandFromDB.Platform = commandUpdateDTO.Platform;
+
             _context.SaveChanges();
 
-            return Ok(_mapper.Map<ReadDTO>(commandToUpdate));
+            return Ok();
 
         }
 

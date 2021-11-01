@@ -17,5 +17,12 @@ namespace Commander.Data
 
         //create new command
         void CreateCommand(Command command);
+
+        //update a current command
+        void UpdateCommand(Command command);
+
+        //delete command by id
+        void DeleteCommand(Command command);
+
     }
 }

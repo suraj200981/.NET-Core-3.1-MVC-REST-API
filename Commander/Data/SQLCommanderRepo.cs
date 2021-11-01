@@ -35,6 +35,15 @@ namespace Commander.Data
             return _context.commands.FirstOrDefault(p => p.Id == id);
         }
 
+        public void UpdateCommand(Command command)
+        {
+
+
+        }
+        public void DeleteCommand(Command command)
+        {
+            _context.commands.Remove(command);
+        }
 
     }
 }

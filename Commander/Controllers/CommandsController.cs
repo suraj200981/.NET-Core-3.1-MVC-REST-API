@@ -76,5 +76,33 @@ namespace Commander.Controllers
             return Ok();
 
         }
+
+        //PUT api/commands/5
+        [HttpPut("{id}")]
+        public ActionResult Update(int id, CreateDTO commandUpdateDTO)
+        {
+
+            var commandToUpdate = _repository.GetCommandById(id);
+
+            // _mapper.Map(commandUpdateDTO, commandToUpdate);
+           // _mapper.Map<CreateDTO>(commandUpdateDTO, commandToUpdate);
+
+            _repository.UpdateCommand(commandToUpdate);
+            _context.SaveChanges();
+
+            return Ok(_mapper.Map<ReadDTO>(commandToUpdate));
+
+        }
+
+        //DELETE api/commands/5
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id) {
+
+            var commandToDelete = _repository.GetCommandById(id);
+            _repository.DeleteCommand(commandToDelete);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
